@@ -1,0 +1,238 @@
+<div class="row">
+  <div class="col-lg-6">
+    <nb-card class="list-card">
+      <nb-card-header>Menu</nb-card-header>
+      <nb-list>
+        <nb-list-item *ngFor="let item of menu; let i = index; let first = first; let last = last;">
+          <div class="w-100">
+            <div class="row">
+              <div class="col">
+                <div (click)="editMenu(dialog, item)">
+                  <span>{{ item.name }}</span>
+                  <span class="d-none d-md-inline text-hint ml-3">{{ item.link|slice:0:40 }}</span>
+                </div>
+              </div>
+              <div class="px-2">
+                <nb-actions size="small">
+                  <nb-action class="{{ first ? 'invisible ' : '' }}px-2" (click)="reorderMenu(i, true)" icon="chevron-up" pack="eva"></nb-action>
+                  <nb-action class="{{ last ? 'invisible ' : '' }}px-2" (click)="reorderMenu(i, false)" icon="chevron-down" pack="eva"></nb-action>
+                  <nb-action class="px-2" (click)="editMenu(dialog, item)" icon="edit" pack="eva"></nb-action>
+                </nb-actions>
+              </div>
+            </div>
+            <ng-template #dialog let-data let-ref="dialogRef">
+              <nb-card>
+                <nb-card-header>Edit Menu Item</nb-card-header>
+                <nb-card-body>
+                  <div class="form-group">
+                    <label for="menuName{{i}}" class="label">Menu Name</label>
+                    <input
+                      id="menuName{{i}}"
+                      [(ngModel)]="menu[i].name"
+                      placeholder="Menu Name"
+                      type="text"
+                      fullWidth
+                      nbInput
+                    >
+                  </div>
+                  <div class="form-group">
+                    <label for="menuLink{{i}}" class="label">Link</label>
+                    <input
+                      id="menuLink{{i}}"
+                      [(ngModel)]="menu[i].link"
+                      placeholder="Link"
+                      type="text"
+                      fullWidth
+                      nbInput
+                    >
+                  </div>
+                </nb-card-body>
+                <nb-card-footer>
+                  <button nbButton (click)="deleteMenu(i)" class="mr-3" status="danger">Delete</button>
+                  <button nbButton (click)="ref.close()">Done</button>
+                </nb-card-footer>
+              </nb-card>
+            </ng-template>
+          </div>
+        </nb-list-item>
+      </nb-list>
+      <nb-card-footer>
+        <button class="float-right" type="submit" nbButton status="primary">
+          Save
+        </button>
+        <button class="float-right mr-3" (click)="addMenu()" nbButton>
+          Add menu
+        </button>
+      </nb-card-footer>
+    </nb-card>
+    <nb-card>
+      <nb-card-header>Site Options</nb-card-header>
+      <nb-card-body>
+        <form #siteOptions="ngForm">
+          <div class="form-group">
+            <label for="siteCopyright" class="label">Copyright Text</label>
+            <input
+              id="siteCopyright"
+              name="siteCopyright"
+              placeholder="Copyright text"
+              type="text"
+              value="{{ siteData?.siteCopyright }}"
+              fullWidth
+              nbInput
+              ngModel
+            >
+          </div>
+          <div class="row">
+            <div class="col-lg-4">
+              <div class="form-group">
+                <label class="label">Logo Preview</label>
+                <div><img src="{{ siteData?.siteLogo }}" alt=""></div>
+              </div>
+            </div>
+            <div class="col-lg-8">
+              <div class="form-group">
+                <label for="siteLogo" class="label">Site Logo</label>
+                <input
+                  id="siteLogo"
+                  name="siteLogo"
+                  placeholder="Site logo image url"
+                  type="text"
+                  value="{{ siteData?.siteLogo }}"
+                  fullWidth
+                  nbInput
+                  ngModel
+                >
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-4">
+              <div class="form-group">
+                <label class="label">Favicon Preview</label>
+                <div><img src="{{ siteData?.siteFavicon }}" alt=""></div>
+              </div>
+            </div>
+            <div class="col-lg-8">
+              <div class="form-group">
+                <label for="siteFavicon" class="label">Favicon</label>
+                <input
+                  id="siteFavicon"
+                  name="siteFavicon"
+                  placeholder="Favicon image url"
+                  type="text"
+                  value="{{ siteData?.siteFavicon }}"
+                  fullWidth
+                  nbInput
+                  ngModel
+                >
+              </div>
+            </div>
+          </div>
+          <button class="float-right" type="submit" nbButton status="primary">
+            Save
+          </button>
+        </form>
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <div class="col-lg-6">
+    <nb-card>
+      <nb-card-header>Search Engine Optimization</nb-card-header>
+      <nb-card-body>
+        <form #seo="ngForm">
+          <div class="form-group">
+            <label for="siteName" class="label">Site Name</label>
+            <input
+              id="siteName"
+              name="siteName"
+              placeholder="My Website"
+              type="text"
+              value="{{ siteData?.siteName }}"
+              fullWidth
+              nbInput
+              ngModel
+            >
+          </div>
+          <div class="form-group">
+            <label for="siteDescription" class="label">Description</label>
+            <textarea
+              id="siteDescription"
+              name="siteDescription"
+              placeholder="Lorem ipsum dolor sit amet"
+              rows="4"
+              value="{{ siteData?.siteDescription }}"
+              fullWidth
+              nbInput
+              ngModel
+            ></textarea>
+          </div>
+          <div class="form-group">
+            <label for="siteKeywords" class="label">Keywords</label>
+            <textarea
+              id="siteKeywords"
+              name="siteKeywords"
+              placeholder="Keywords separated by comma"
+              rows="3"
+              value="{{ siteData?.siteKeywords }}"
+              fullWidth
+              nbInput
+              ngModel
+            ></textarea>
+          </div>
+          <button class="float-right" type="submit" nbButton status="primary">
+            Save
+          </button>
+        </form>
+      </nb-card-body>
+    </nb-card>
+    <nb-card>
+      <nb-card-header>Footer</nb-card-header>
+      <nb-card-body>
+        <form #footer="ngForm">
+          <div class="form-group">
+            <label for="siteLogo" class="label">Site Logo</label>
+            <input
+              id="siteLogo"
+              name="siteLogo"
+              placeholder="Site logo image url"
+              type="text"
+              value="{{ siteData?.siteLogo }}"
+              fullWidth
+              nbInput
+              ngModel
+            >
+          </div>
+          <div class="form-group">
+            <label for="siteFavicon" class="label">Favicon</label>
+            <input
+              id="siteFavicon"
+              name="siteFavicon"
+              placeholder="Favicon image url"
+              type="text"
+              value="{{ siteData?.siteFavicon }}"
+              fullWidth
+              nbInput
+              ngModel
+            >
+          </div>
+          <div class="form-group">
+            <label for="siteCopyright" class="label">Copyright Text</label>
+            <input
+              id="siteCopyright"
+              name="siteCopyright"
+              placeholder="Copyright text"
+              type="text"
+              value="{{ siteData?.siteCopyright }}"
+              fullWidth
+              nbInput
+              ngModel
+            >
+          </div>
+          <button class="float-right" type="submit" nbButton status="primary">
+            Save
+          </button>
+        </form>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>

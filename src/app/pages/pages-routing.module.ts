@@ -4,6 +4,9 @@ import { NgModule } from '@angular/core';
 import { PagesComponent } from './pages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ECommerceComponent } from './e-commerce/e-commerce.component';
+import { SiteSettingsComponent } from './site-settings/site-settings.component';
+import { AboutPageComponent } from './about-page/about-page.component';
+import { HomePageComponent } from './home-page/home-page.component';
 import { NotFoundComponent } from './miscellaneous/not-found/not-found.component';
 
 const routes: Routes = [{
@@ -17,6 +20,18 @@ const routes: Routes = [{
     {
       path: 'iot-dashboard',
       component: DashboardComponent,
+    },
+    {
+      path: 'site-settings',
+      component: SiteSettingsComponent,
+    },
+    {
+      path: 'about-page',
+      component: AboutPageComponent,
+    },
+    {
+      path: 'home-page',
+      component: HomePageComponent,
     },
     {
       path: 'layout',
@@ -70,7 +85,7 @@ const routes: Routes = [{
     },
     {
       path: '',
-      redirectTo: 'dashboard',
+      redirectTo: 'site-settings',
       pathMatch: 'full',
     },
     {
